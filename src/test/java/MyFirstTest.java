@@ -24,7 +24,7 @@ public class MyFirstTest {
         driver.close(); //close the Browser
     }
     public void delay(int var){
-        driver.manage().timeouts().implicitlyWait(var, TimeUnit.MILLISECONDS); //Setting uo Implicid Wait
+        driver.manage().timeouts().implicitlyWait(var, TimeUnit.SECONDS); //Setting uo Implicid Wait
     }
     @FindBy (id = "lst-ib")
     public WebElement searchField;
@@ -43,7 +43,7 @@ public class MyFirstTest {
     @Test
     public void newGoogleSearch() throws InterruptedException {
         beforeClass();
-        delay(50);
+        delay(10);
         driver.get("https://google.com.ua"); // Open a Google website
         //search("The Infestation"); //Locate text area nad type in search querry
         searchButton.click(); // Initiate search
