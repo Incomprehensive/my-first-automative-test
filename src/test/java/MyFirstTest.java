@@ -18,7 +18,7 @@ public class MyFirstTest {
         driver.get("https://google.com.ua"); // Open a Google website
         driver.findElement(By.id("lst-ib")).sendKeys("The Infestation"); // Locate a text area and type in search inqury
         driver.findElement(By.id("_fZl")).click(); // Initiate search
-        driver.findElement(By.xpath(".//*[@id='rso']/div/div/div[4]/div/div/h3/a")).click(); //Find a link to a band group
+        driver.findElement(By.xpath("//div[@id='rso']//a[contains(text(), 'THE INFESTATION')]")).click(); //Find a link to a band group
         driver.close(); //close the Browser
 
 }
