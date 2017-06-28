@@ -45,7 +45,7 @@ public class MyFirstTest {
         beforeClass();
         delay(10);
         driver.get("https://google.com.ua"); // Open a Google website
-        //search("The Infestation"); //Locate text area nad type in search querry
+        search("The Infestation"); //Locate text area nad type in search querry
         searchButton.click(); // Initiate search
         searchResult.click(); //Find a link to a band group
         afterClass();
