@@ -1,4 +1,19 @@
+import org.junit.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+import java.util.concurrent.TimeUnit;
+
+/**
+ * Created by Anton Pelianski on 28.06.2017.
+ */
 public class MyFirstTest {
+    private String expectedTitle = "Google";
 
     @FindBy (xpath = ".//*[@id='lst-ib']")
     public WebElement searchField;
@@ -21,7 +36,6 @@ public class MyFirstTest {
     @Test
     public void newGoogleSearch() throws InterruptedException {
         driver.get("https://google.com.ua"); // Open a Google website
-        String expectedTitle = "Google";
         String actualTitle = driver.getTitle();
         Assert.assertEquals(expectedTitle, actualTitle);
         searchField.sendKeys("THE INFESTATION"); //Locate text area and type in search query
