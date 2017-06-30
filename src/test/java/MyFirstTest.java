@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -24,13 +25,13 @@ public class SeleniumTest {
     @FindBy (id = "top-login-pwd")
     public WebElement pass;
 
-    @FindBy (xpath = "//div[@class = 'logged-in-as-wrap']/a[@href]")
+    @FindBy (xpath = "//div[@class = 'logged-in-as-wrap']/a[2]")
     public WebElement logoutBtn;
 
     @FindBy (id="top-login-btn")
     public WebElement loginBtn2;
 
-    @FindBy (className = "logged-in-as-cap")
+    @FindBy (xpath = "//div[@class = 'logged-in-as-wrap']/a[1]")
     public WebElement verify;
 
     private String user = "kneeninja1";
@@ -39,8 +40,7 @@ public class SeleniumTest {
     private WebDriver driver;
 
     @Before
-    public void initialize()
-    {
+    public void initialize() {
         System.setProperty("webdriver.chrome.driver", "D:\\Selenium\\RemoteDriver\\Chrome\\chromedriver.exe");
         driver = new ChromeDriver();
         PageFactory.initElements(driver, this);
@@ -54,11 +54,11 @@ public class SeleniumTest {
         pass.sendKeys(password);
         loginBtn2.click();
         hold.until(ExpectedConditions.elementToBeClickable(logoutBtn));
-        Assert.assertEquals(user, verify.getText());
+        Assert.assertEquals(verify.getText(), user);
         logoutBtn.click();
         }
     @After
-    public void close(){
+    public void close() {
         driver.close();
     }
 }
