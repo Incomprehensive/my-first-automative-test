@@ -17,46 +17,76 @@ import java.util.concurrent.TimeUnit;
  */
 public class SeleniumTest {
     @FindBy (xpath = "//span[@class = 'a-like bold']")
-    public WebElement loginBtn1;
+    private WebElement loginButtonForm;
 
     @FindBy (id = "top-login-uname")
-    public WebElement username;
+    private WebElement username;
 
     @FindBy (id = "top-login-pwd")
-    public WebElement pass;
+    private WebElement pass;
 
     @FindBy (xpath = "//div[@class = 'logged-in-as-wrap']/a[2]")
-    public WebElement logoutBtn;
+    private WebElement logoutButton;
 
     @FindBy (id="top-login-btn")
-    public WebElement loginBtn2;
+    private WebElement loginButtonConfirm;
 
     @FindBy (xpath = "//div[@class = 'logged-in-as-wrap']/a[1]")
-    public WebElement verify;
+    private WebElement verify;
 
-    private String user = "kneeninja1";
-    private String password = "IY7DP";
+    @FindBy (id = "search-text")
+    private WebElement searchInput;
 
+    @FindBy (id = "search-submit")
+    private WebElement searchSubmit;
+
+    public String user = "kneeninja1";
+    public String password = "IY7DP";
     private WebDriver driver;
+    WebDriverWait hold;
 
     @Before
     public void initialize() {
         System.setProperty("webdriver.chrome.driver", "D:\\Selenium\\RemoteDriver\\Chrome\\chromedriver.exe");
         driver = new ChromeDriver();
         PageFactory.initElements(driver, this);
-    }
-    @Test
-    public void testLogin() {
         WebDriverWait hold =  new WebDriverWait(driver, 10);
-        driver.get("https://rutracker.org");
-        loginBtn1.click();
+    }
+
+    public void login() {
+        loginButtonForm.click();
         username.sendKeys(user);
         pass.sendKeys(password);
-        loginBtn2.click();
-        hold.until(ExpectedConditions.elementToBeClickable(logoutBtn));
+        loginButtonConfirm.click();
+    }
+
+    public void search (String query) {
+        searchInput.sendKeys(query);
+        searchSubmit.click();
+    }
+
+    public void logout() {
+        logoutButton.click();
+    }
+
+    @Test
+    public void testLogin() {
+        initialize();
+        driver.get("https://rutracker.org");
+        login();
         Assert.assertEquals(verify.getText(), user);
-        logoutBtn.click();
-        }
+        hold.until(ExpectedConditions.elementToBeClickable(logoutButton));
+        logout();
+    }
+
+    @Test
+    public void testLoginSearch() {
+        login();
+        search("The infestation");
+        hold.until(ExpectedConditions.elementToBeClickable(logoutButton));
+        logout();
+    }
+
     @After
     public void close() {
         driver.close();
