@@ -43,9 +43,8 @@ public class SeleniumTest {
     private WebElement searchSubmit;
 
     File file = new File("src/main/resources/login.txt");
-    Scanner br = new Scanner(file).useDelimiter(";");
-    public String user = br.next();
-    public String password = br.next();
+    private String user;
+    private String password;
     private WebDriver driver;
     WebDriverWait hold;
 
@@ -59,7 +58,16 @@ public class SeleniumTest {
         PageFactory.initElements(driver, this);
         hold =  new WebDriverWait(driver, 10);
     }
-
+    public void read() throws FileNotFoundException {
+        Scanner br = new Scanner(file).useDelimiter(";");
+        if (br.hasNext()) {
+            user = br.next();
+            }
+        if (br.hasNext()) {
+            password = br.next();
+        }
+        br.close();
+    }
     public void login() {
         hold.until(ExpectedConditions.elementToBeClickable(loginButtonForm));
         loginButtonForm.click();
@@ -80,6 +88,7 @@ public class SeleniumTest {
     @Test
     public void testLogin() throws FileNotFoundException {
         driver.get("https://rutracker.org");
+        read();
         login();
         Assert.assertEquals(verify.getText(), user);
         hold.until(ExpectedConditions.elementToBeClickable(logoutButton));
@@ -87,8 +96,9 @@ public class SeleniumTest {
     }
 
     @Test
-    public void testLoginSearch() {
+    public void testLoginSearch() throws FileNotFoundException {
         driver.get("https://rutracker.org");
+        read();
         login();
         search("The infestation");
         hold.until(ExpectedConditions.elementToBeClickable(logoutButton));
